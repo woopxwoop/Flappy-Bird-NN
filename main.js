@@ -26,10 +26,14 @@ let best;
 
 let gen = 1;
 
+let score = 0;
+
+let bestScore = 0;
+
 function bird() {
   birds.push(this);
   this.score = 0;
-  this.color = "rgba(0, 0, 0, 0.2)";
+  this.color = "rgba(229, 179, 0, 0.2)";
   this.y = 0.5;
   this.x = 0;
   this.yVelocity = 0;
@@ -63,7 +67,8 @@ function bird() {
       if (
         this.x > p.x &&
         this.x < p.x + 0.1 &&
-        Math.abs(this.y - p.height) > 0.1
+        // include radius checking
+        (this.y < p.upper || this.y + 0.05 > p.lower)
       ) {
         if (!this.dead) {
           deadBirds.push(this);
@@ -95,8 +100,10 @@ function bird() {
 function pipe() {
   pipes.push(this);
   this.x = (c.width - c.height) / 2 / c.height + 1;
-  this.color = "black";
+  this.color = "rgba(0, 152, 0, 1)";
   this.height = Math.random() * 0.75 + 0.125;
+  this.upper = this.height - 0.1;
+  this.lower = this.height + 0.1;
   this.update = () => {
     this.x -= 0.01;
     if (this.x < -((c.width - c.height) / 2) / c.height - 0.1) {
@@ -140,9 +147,9 @@ function drawBrain(brain) {
           c.height *
           0.005;
         if (brain.layers[i].neurons[j - 1].weights[k - 1] > 0) {
-          ctx.strokeStyle = "red";
+          ctx.strokeStyle = "yellow";
         } else {
-          ctx.strokeStyle = "blue";
+          ctx.strokeStyle = "cyan";
         }
         ctx.moveTo(
           (c.width / 4) * (i / brain.layers.length) + (c.width * 3) / 4,
@@ -193,9 +200,9 @@ function drawBrain(brain) {
           brain.layers[i].neurons[j - 1].weights.length - 1
         ] > 0
       ) {
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "yellow";
       } else {
-        ctx.fillStyle = "blue";
+        ctx.fillStyle = "cyan";
       }
 
       ctx.beginPath();
@@ -229,7 +236,10 @@ function drawBrain(brain) {
 function update() {
   c.width = scale * window.innerWidth;
   c.height = scale * window.innerHeight;
+  score++;
   if (deadBirds.length == birds.length) {
+    bestScore = Math.max(bestScore, score);
+    score = 0;
     gen++;
     birds.sort((a, b) => {
       return b.score - a.score;
@@ -281,7 +291,7 @@ function update() {
     drawBrain(birds[0].brain);
   }
   ctx.textAlign = "left";
-  ctx.fillStyle = "black";
+  ctx.fillStyle = "white";
   ctx.strokeStyle = "white";
   ctx.font = "bold " + Math.floor(c.height / 25) + "px arial";
   ctx.fillText("Generation: " + gen, (c.width * 1) / 50, c.height / 10);
@@ -290,8 +300,15 @@ function update() {
     (c.width * 1) / 50,
     c.height / 5
   );
+  ctx.fillText(
+    `Best Score: ${bestScore}`,
+    (c.width * 1) / 50,
+    c.height / (10 / 3)
+  );
 
-  ctx.filter = "invert(1)";
+  ctx.fillText(`${score}`, (c.width * 2) / 5, c.height / 10);
+
+  ctx.filter = "none";
   ctx.drawImage(c, 0, 0);
 }
 
