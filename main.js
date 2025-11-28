@@ -44,7 +44,9 @@ let bestScore = 0;
 
 // should be able to change these later
 
-let topNum = 5;
+let totalNum = 1000;
+
+let topNum = 20;
 
 let mutationRate = 0.05;
 
@@ -121,9 +123,6 @@ function pipe() {
   pipes.push(this);
   this.x = (c.width - c.height) / 2 / c.height + 1;
   this.color = "rgba(0, 152, 0, 1)";
-  if (pipes.length == 0) {
-    this.height = Math.random() * 0.5 + 0.25;
-  }
   this.height = Math.random() * 0.75 + 0.125;
   this.upper = this.height - 0.1;
   this.lower = this.height + 0.1;
@@ -277,7 +276,7 @@ function update() {
     birds = [];
     deadBirds = [];
     pipes = [];
-    for (let i = 0; i < 999; i++) {
+    for (let i = 0; i < totalNum - topNum; i++) {
       let newBird = new bird();
       newBird.brain = mutate(
         parents[~~(Math.random() * parents.length)].brain,
@@ -285,7 +284,10 @@ function update() {
         rebelRate
       );
     }
-    birds.push(parents[0]);
+
+    for (let bird of parents) {
+      birds.push(bird);
+    }
     best = parents[0];
   }
   pipeTimer += 1000 / 60;
@@ -338,6 +340,6 @@ function update() {
   ctx.drawImage(c, 0, 0);
 }
 
-for (let i = 0; i < 1000; i++) new bird();
+for (let i = 0; i < totalNum; i++) new bird();
 
 setInterval(update, 1000 / 60);
