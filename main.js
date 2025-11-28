@@ -52,6 +52,8 @@ let mutationRate = 0.03;
 
 let rebelRate = 0.01;
 
+let numInputs = 5;
+
 function bird() {
   birds.push(this);
   this.score = 0;
@@ -159,7 +161,7 @@ function drawBrain(brain) {
     if (i != 0) {
       lineStep = 1 / (1 + brain.layers[i - 1].neurons.length);
     } else {
-      lineStep = 1 / 5;
+      lineStep = 1 / (numInputs + 1);
     }
 
     for (let j = 1; j * yStep < 1; j++) {
