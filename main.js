@@ -4,12 +4,24 @@ let c2 = document.createElement("canvas");
 document.body.appendChild(c);
 //document.body.appendChild(c2);
 
-let scale = 2;
-c.width = scale * window.innerWidth;
-c.height = scale * window.innerHeight;
+// Responsive, DPI-aware canvas sizing
+let scale = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+function resizeCanvas() {
+  scale = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  // keep CSS size as viewport and set backing store size for sharpness
+  c.style.width = w + "px";
+  c.style.height = h + "px";
+  c.width = Math.floor(w * scale);
+  c.height = Math.floor(h * scale);
 
-c2.width = scale * window.innerWidth;
-c2.height = scale * window.innerHeight;
+  c2.width = c.width;
+  c2.height = c.height;
+}
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 let ctx = c.getContext("2d");
 
@@ -234,8 +246,7 @@ function drawBrain(brain) {
 }
 
 function update() {
-  c.width = scale * window.innerWidth;
-  c.height = scale * window.innerHeight;
+  // canvas backing store is updated on resize; only advance score here
   score++;
   if (deadBirds.length == birds.length) {
     bestScore = Math.max(bestScore, score);
