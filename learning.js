@@ -75,17 +75,31 @@ this is not a constructor, just a function which
 creates a mutated copy of another neural net (ideally a parent)
 (⚡️⚡️⚡️⚡️)
 */
-function mutate(parentNet, mutationRate) {
+function mutate(parentNet, mutationRate, rebelRate) {
   let mutation = new net();
 
   for (let i = 0; i < parentNet.layers.length; i++) {
     for (let j = 0; j < parentNet.layers[i].neurons.length; j++) {
-      for (let k = 0; k < parentNet.layers[i].neurons[j].weights.length; k++) {
-        if (Math.random() <= mutationRate) {
+      if (Math.random() <= rebelRate) {
+        for (
+          let k = 0;
+          k < parentNet.layers[i].neurons[j].weights.length;
+          k++
+        ) {
           mutation.layers[i].neurons[j].weights[k] = Math.random() * 2 - 1;
-        } else {
-          mutation.layers[i].neurons[j].weights[k] =
-            parentNet.layers[i].neurons[j].weights[k];
+        }
+      } else {
+        for (
+          let k = 0;
+          k < parentNet.layers[i].neurons[j].weights.length;
+          k++
+        ) {
+          if (Math.random() <= mutationRate) {
+            mutation.layers[i].neurons[j].weights[k] = Math.random() * 2 - 1;
+          } else {
+            mutation.layers[i].neurons[j].weights[k] =
+              parentNet.layers[i].neurons[j].weights[k];
+          }
         }
       }
     }

@@ -48,6 +48,8 @@ let topNum = 5;
 
 let mutationRate = 0.02;
 
+let rebelRate = 0.01;
+
 function bird() {
   birds.push(this);
   this.score = 0;
@@ -276,7 +278,8 @@ function update() {
       let newBird = new bird();
       newBird.brain = mutate(
         parents[~~(Math.random() * parents.length)].brain,
-        mutationRate
+        mutationRate,
+        rebelRate
       );
     }
     birds.push(parents[0]);
