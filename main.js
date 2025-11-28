@@ -46,7 +46,7 @@ let bestScore = 0;
 
 let topNum = 5;
 
-let mutationRate = 0.02;
+let mutationRate = 0.05;
 
 let rebelRate = 0.01;
 
