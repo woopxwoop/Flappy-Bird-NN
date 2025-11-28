@@ -72,7 +72,8 @@ function bird() {
       this.brain.predict([
         this.y,
         this.yVelocity,
-        frontPipe.height,
+        frontPipe.upper,
+        frontPipe.lower,
         frontPipe.x,
       ])
     ) {
