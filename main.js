@@ -44,7 +44,7 @@ let bestScore = 0;
 
 // should be able to change these later
 
-let totalNum = 1000;
+let totalNum = 2000;
 
 let topNum = 10;
 
