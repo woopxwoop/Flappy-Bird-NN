@@ -90,7 +90,7 @@ function bird() {
         this.x > p.x &&
         this.x < p.x + 0.1 &&
         // include radius checking
-        (this.y < p.upper || this.y + 0.05 > p.lower)
+        (this.y - 0.025 < p.upper || this.y + 0.025 > p.lower)
       ) {
         if (!this.dead) {
           deadBirds.push(this);
