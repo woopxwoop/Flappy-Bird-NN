@@ -121,6 +121,9 @@ function pipe() {
   pipes.push(this);
   this.x = (c.width - c.height) / 2 / c.height + 1;
   this.color = "rgba(0, 152, 0, 1)";
+  if (pipes.length == 0) {
+    this.height = Math.random() * 0.5 + 0.25;
+  }
   this.height = Math.random() * 0.75 + 0.125;
   this.upper = this.height - 0.1;
   this.lower = this.height + 0.1;
