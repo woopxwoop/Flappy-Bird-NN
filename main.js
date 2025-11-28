@@ -32,8 +32,6 @@ let pipeTimer = 1500;
 
 let frontPipe;
 
-let secondPipe;
-
 let deadBirds = [];
 
 let best;
@@ -76,7 +74,6 @@ function bird() {
         this.yVelocity,
         frontPipe.height,
         frontPipe.x,
-        secondPipe ? secondPipe.height : 0.5,
       ])
     ) {
       this.yVelocity = -0.008; //flap
@@ -301,10 +298,6 @@ function update() {
   for (let i = 0; i < pipes.length; i++) {
     if (pipes[i].x > -0.1) {
       frontPipe = pipes[i];
-
-      if (pipes.length > i + 1) {
-        secondPipe = pipes[i + 1];
-      }
       break;
     }
   }
