@@ -23,7 +23,7 @@ function neuron() {
     sum += this.weights[this.weights.length - 1]; // add bias
 
     if (sum > 0) {
-      return 1;
+      return sum;
     } else {
       return 0;
     }
