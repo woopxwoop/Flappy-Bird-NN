@@ -29,9 +29,29 @@
         height: 100%;
         filter: invert(1) blur(10px);
       }
+
+      @media only screen and (orientation: portrait) {
+        .alert {
+          display: block;
+        }
+      }
+
+      @media only screen and (orientation: landscape) {
+        .alert {
+          display: none;
+        }
+      }
+
+      .alert {
+        font-size: 5vw;
+      }
     </style>
   </head>
-  <body></body>
+  <body>
+    <div class="alert">
+      Rotate your phone to landscape for a better viewing experience
+    </div>
+  </body>
   <script src="learning.js"></script>
   <script src="main.js"></script>
 </html>

@@ -42,6 +42,12 @@ let score = 0;
 
 let bestScore = 0;
 
+// should be able to change these later
+
+let topNum = 5;
+
+let mutationRate = 0.02;
+
 function bird() {
   birds.push(this);
   this.score = 0;
@@ -256,7 +262,7 @@ function update() {
       return b.score - a.score;
     });
     let parents = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < topNum; i++) {
       parents.push(birds[i]);
       birds[i].dead = false;
       birds[i].y = 0.5;
@@ -268,7 +274,10 @@ function update() {
     pipes = [];
     for (let i = 0; i < 999; i++) {
       let newBird = new bird();
-      newBird.brain = mutate(parents[~~(Math.random() * parents.length)].brain);
+      newBird.brain = mutate(
+        parents[~~(Math.random() * parents.length)].brain,
+        mutationRate
+      );
     }
     birds.push(parents[0]);
     best = parents[0];
