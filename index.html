@@ -45,6 +45,7 @@
         }
         canvas {
           display: block;
+          z-index: -1;
         }
       }
 
@@ -52,11 +53,38 @@
         font-size: 10vw;
         color: white;
       }
+
+      .input-container {
+        z-index: 3;
+        margin-top: 25vw;
+        margin-left: 75vw;
+        color: white;
+      }
+
+      .input-container button {
+        z-index: -2;
+      }
+
+      .input-container button:hover {
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
     <div class="alert">
       Rotate your phone to landscape for a better viewing experience
+    </div>
+    <div class="input-container">
+      <button class="default-button">Default</button>
+      <br />
+      <input type="range" id="rebelSlider" min="0" max="100" value="1" />
+      <p>Current rebel rate: <span id="rebelValue">1%</span></p>
+
+      <input type="range" id="mutationSlider" min="0" max="100" value="3" />
+      <p>Current mutation rate: <span id="mutationValue">3%</span></p>
+
+      <input type="range" id="speedSlider" min="1" max="10" value="1" />
+      <p>Current speed: <span id="speedValue">1x</span></p>
     </div>
   </body>
   <script src="learning.js"></script>

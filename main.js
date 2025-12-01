@@ -1,6 +1,34 @@
 let c = document.createElement("canvas");
 let c2 = document.createElement("canvas");
 
+const speedSlider = document.getElementById("speedSlider");
+const speedSliderDisplay = document.getElementById("speedValue");
+
+const mutationSlider = document.getElementById("mutationSlider");
+const mutationSliderDisplay = document.getElementById("mutationValue");
+
+const rebelSlider = document.getElementById("rebelSlider");
+const rebelSliderDisplay = document.getElementById("rebelValue");
+
+let birds;
+let pipes;
+let pipeTimer;
+let frontPipe;
+let deadBirds;
+let best;
+let gen;
+let score;
+let bestScore;
+
+// should be able to change these later
+let totalNum;
+let topNum;
+let mutationRate;
+let rebelRate;
+let numInputs;
+
+let interval;
+
 document.body.appendChild(c);
 //document.body.appendChild(c2);
 
@@ -24,35 +52,6 @@ resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
 let ctx = c.getContext("2d");
-
-let birds = [];
-let pipes = [];
-
-let pipeTimer = 1500;
-
-let frontPipe;
-
-let deadBirds = [];
-
-let best;
-
-let gen = 1;
-
-let score = 0;
-
-let bestScore = 0;
-
-// should be able to change these later
-
-let totalNum = 2000;
-
-let topNum = 10;
-
-let mutationRate = 0.03;
-
-let rebelRate = 0.01;
-
-let numInputs = 5;
 
 function bird() {
   birds.push(this);
@@ -343,6 +342,57 @@ function update() {
   ctx.drawImage(c, 0, 0);
 }
 
-for (let i = 0; i < totalNum; i++) new bird();
+function reset(setTotalNum, setTopNum, setMutationRate, setRebelRate) {
+  clearInterval(interval);
 
-setInterval(update, 1000 / 60);
+  birds = [];
+  pipes = [];
+  pipeTimer = 1500;
+  frontPipe;
+  deadBirds = [];
+  best;
+  gen = 1;
+  score = 0;
+  bestScore = 0;
+
+  // customizable
+  totalNum = setTotalNum;
+  topNum = setTopNum;
+  mutationRate = setMutationRate;
+  rebelRate = setRebelRate;
+  numInputs = 5;
+
+  for (let i = 0; i < totalNum; i++) new bird();
+
+  interval = setInterval(update, 1000 / (speedSlider.value * 60));
+  mutationSlider.value = mutationRate;
+  rebelSlider.value = rebelRate;
+}
+
+// default
+reset(2000, 10, 0.03, 0.01);
+
+function addButtonEvents() {
+  document.querySelector(".default-button").addEventListener("click", () => {
+    reset(2000, 10, 0.03, 0.01);
+  });
+
+  // Update the displayed value when the slider input changes
+  speedSlider.addEventListener("input", function () {
+    speedSliderDisplay.textContent = `${this.value}x`;
+    clearInterval(interval);
+    interval = setInterval(update, 1000 / (this.value * 60));
+  });
+
+  mutationSlider.addEventListener("input", function () {
+    mutationSliderDisplay.textContent = `${this.value}%`;
+    mutationRate = this.value / 100;
+  });
+
+  rebelSlider.addEventListener("input", function () {
+    rebelSliderDisplay.textContent = `${this.value}%`;
+    rebelRate = this.value / 100;
+  });
+}
+
+addButtonEvents();
