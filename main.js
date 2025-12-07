@@ -367,12 +367,19 @@ function reset(setTotalNum, setTopNum, setMutationRate, setRebelRate) {
   interval = setInterval(update, 1000 / (speedSlider.value * 60));
   mutationSlider.value = mutationRate;
   rebelSlider.value = rebelRate;
+
+  mutationSliderDisplay.textContent = `${mutationRate * 100}%`;
+  rebelSliderDisplay.textContent = `${rebelRate * 100}%`;
 }
 
 // default
 reset(2000, 10, 0.03, 0.01);
 
 function addButtonEvents() {
+  document.querySelector(".reset-button").addEventListener("click", () => {
+    reset(totalNum, topNum, mutationRate, rebelRate);
+  });
+
   document.querySelector(".default-button").addEventListener("click", () => {
     reset(2000, 10, 0.03, 0.01);
   });
