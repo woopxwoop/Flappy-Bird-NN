@@ -3,6 +3,10 @@ copy paste all the code from learning2.js for it to work
 (or switch src in index.html to learning2)
 */
 
+let activationFunction = (value) => {
+  return Math.max(value, 0);
+};
+
 //this is a constructor i promise i know it doesn't look like it
 function neuron() {
   this.weights = [];
@@ -22,11 +26,7 @@ function neuron() {
 
     sum += this.weights[this.weights.length - 1]; // add bias
 
-    if (sum > 0) {
-      return sum;
-    } else {
-      return 0;
-    }
+    return activationFunction(sum);
   };
 }
 

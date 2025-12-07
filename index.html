@@ -75,16 +75,27 @@
       Rotate your phone to landscape for a better viewing experience
     </div>
     <div class="input-container">
-      <button class="default-button">Default</button>
+      <button class="default-button">Reset</button>
       <br />
-      <input type="range" id="rebelSlider" min="0" max="100" value="1" />
+
       <p>Current rebel rate: <span id="rebelValue">1%</span></p>
+      <input type="range" id="rebelSlider" min="0" max="100" value="1" />
 
-      <input type="range" id="mutationSlider" min="0" max="100" value="3" />
       <p>Current mutation rate: <span id="mutationValue">3%</span></p>
+      <input type="range" id="mutationSlider" min="0" max="100" value="3" />
 
-      <input type="range" id="speedSlider" min="1" max="10" value="1" />
       <p>Current speed: <span id="speedValue">1x</span></p>
+      <input type="range" id="speedSlider" min="1" max="5" value="1" />
+
+      <p>Activation Function</p>
+      <input type="radio" id="ReLU" name="activationFunction" checked />
+      ReLU
+      <input type="radio" id="Sigmoid" name="activationFunction" />
+      Sigmoid
+      <input type="radio" id="Tanh" name="activationFunction" />
+      Tanh
+      <input type="radio" id="Linear" name="activationFunction" />
+      Linear
     </div>
   </body>
   <script src="learning.js"></script>

@@ -393,6 +393,43 @@ function addButtonEvents() {
     rebelSliderDisplay.textContent = `${this.value}%`;
     rebelRate = this.value / 100;
   });
+
+  const radioButtons = document.querySelectorAll(
+    'input[name="activationFunction"]'
+  );
+
+  radioButtons.forEach((radioButton) => {
+    radioButton.addEventListener("change", (event) => {
+      if (event.target.checked) {
+        changeActivationFunction(event.target.value);
+      }
+    });
+  });
 }
 
+function Sigmoid(x) {
+  return 1 / (1 + Math.exp(-x));
+}
+
+function ReLU(x) {
+  return Math.max(x, 0);
+}
+
+function Linear(x) {
+  return x;
+}
+
+function changeActivationFunction(func) {
+  switch (func) {
+    case "ReLU":
+      activationFunction = ReLU;
+    case "Tanh":
+      activationFunction = Math.tanh;
+    case "Sigmoid":
+      activationFunction = Sigmoid;
+    case "Linear":
+      activationFunction = Linear;
+  }
+  reset(totalNum, topNum, mutationRate, rebelRate);
+}
 addButtonEvents();
